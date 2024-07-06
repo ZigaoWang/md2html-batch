@@ -1,5 +1,4 @@
 import os
-import argparse
 import markdown
 from bs4 import BeautifulSoup
 from pygments import highlight
@@ -19,7 +18,7 @@ def print_logo():
     print("MD2HTML - Markdown to HTML Converter (Batch Edition)")
     print("Made with 💜 by Zigao Wang.")
     print("This project is licensed under MIT License.")
-    print("GitHub Repo: https://github.com/ZigaoWang/md2html/")
+    print("GitHub Repo: https://github.com/ZigaoWang/md2html-batch/")
     print("--------------------------------------------------")
 
 
