@@ -16,7 +16,7 @@ def print_logo():
     """
     print("--------------------------------------------------")
     print(logo)
-    print("MD2HTML - Markdown to HTML Converter")
+    print("MD2HTML - Markdown to HTML Converter (Batch Edition)")
     print("Made with 💜 by Zigao Wang.")
     print("This project is licensed under MIT License.")
     print("GitHub Repo: https://github.com/ZigaoWang/md2html/")
@@ -161,9 +161,11 @@ def batch_convert_md_to_html(entries_folder, output_folder, site_name, light_mod
 
 def main():
     print_logo()
-    mode = input("Choose the mode (light/dark): ").strip().lower()
-    site_name = input("Enter the name of the site: ").strip()
-    use_folders = input("Do you want to use folders for URLs? (yes/no): ").strip().lower() == 'yes'
+
+    mode = input("Choose the mode (light/dark) [light]: ").strip().lower() or 'light'
+    site_name = input("Enter the name of the site [Journal Entries]: ").strip() or 'Journal Entries'
+    use_folders = input("Do you want to use folders for URLs? (yes/no) [yes]: ").strip().lower() or 'yes'
+    use_folders = use_folders == 'yes'
 
     light_mode = mode == 'light'
 
