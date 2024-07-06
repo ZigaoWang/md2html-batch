@@ -1,0 +1,133 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3 {
+    color: #111;
+    font-weight: 600;
+}
+
+pre {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+    position: relative;
+    color: #333;
+    margin: 0;
+}
+
+code {
+    background: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+a {
+    color: #007aff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul, ol {
+    padding-left: 20px;
+}
+
+blockquote {
+    border-left: 4px solid #007aff;
+    padding-left: 10px;
+    color: #666;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.7em;
+    color: #777;
+    border-top: 1px solid #eaeaea;
+}
+
+footer a {
+    color: #007aff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.language-label {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #333;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+figcaption {
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+    color: black;
+    background: none;
+    text-shadow: 0 1px white;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    hyphens: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
