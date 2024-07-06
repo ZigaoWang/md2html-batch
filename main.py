@@ -90,7 +90,7 @@ def add_custom_style(html_content, css_content=None):
     return styled_html + footer + copy_button_script + mathjax_script
 
 
-def batch_convert_md_to_html(entries_folder, output_folder, light_mode=True):
+def batch_convert_md_to_html(entries_folder, output_folder, site_name, light_mode=True, use_folders=True):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
@@ -111,29 +111,43 @@ def batch_convert_md_to_html(entries_folder, output_folder, light_mode=True):
         html = convert_md_to_html(md_text, light_mode=light_mode)
         html_with_style = add_custom_style(html, css_content)
 
-        html_file_name = md_file.replace('.md', '.html')
-        html_file_path = os.path.join(output_folder, html_file_name)
+        if use_folders:
+            html_folder_name = md_file.replace('.md', '')
+            html_folder_path = os.path.join(output_folder, html_folder_name)
+            os.makedirs(html_folder_path, exist_ok=True)
+            html_file_path = os.path.join(html_folder_path, 'index.html')
+        else:
+            html_file_name = md_file.replace('.md', '.html')
+            html_file_path = os.path.join(output_folder, html_file_name)
+
         with open(html_file_path, 'w', encoding='utf-8') as html_file:
             html_file.write(html_with_style)
 
-        print(f"Converted {md_file} to {html_file_name}")
+        print(f"Converted {md_file} to {html_file_path}")
 
-    index_content = """
+    index_content = f"""
     <html>
     <head>
-        <title>Journal Index</title>
+        <title>{site_name}</title>
+        <style>{css_content}</style>
     </head>
     <body>
-        <h1>Journal Entries</h1>
+        <h1>{site_name}</h1>
         <ul>
     """
 
     for md_file in md_files:
-        html_file = md_file.replace('.md', '.html')
-        index_content += f'<li><a href="{html_file}">{html_file}</a></li>\n'
+        if use_folders:
+            html_file = md_file.replace('.md', '') + '/'
+        else:
+            html_file = md_file.replace('.md', '.html')
+        index_content += f'<li><a href="{html_file}">{md_file.replace(".md", "")}</a></li>\n'
 
     index_content += """
         </ul>
+        <footer>
+            <p>Powered by <a href="https://github.com/ZigaoWang/md2html/">MD2HTML</a> by <a href="https://zigao.wang">Zigao Wang</a></p>
+        </footer>
     </body>
     </html>
     """
@@ -147,17 +161,16 @@ def batch_convert_md_to_html(entries_folder, output_folder, light_mode=True):
 
 def main():
     print_logo()
+    mode = input("Choose the mode (light/dark): ").strip().lower()
+    site_name = input("Enter the name of the site: ").strip()
+    use_folders = input("Do you want to use folders for URLs? (yes/no): ").strip().lower() == 'yes'
 
-    parser = argparse.ArgumentParser(description="Batch convert Markdown files to HTML")
-    parser.add_argument('--mode', choices=['light', 'dark'], default='light',
-                        help="Select light or dark mode for the HTML output")
-    args = parser.parse_args()
+    light_mode = mode == 'light'
 
-    light_mode = args.mode == 'light'
-    entries_folder = 'entries'
+    entries_folder = 'input'
     output_folder = 'output'
 
-    batch_convert_md_to_html(entries_folder, output_folder, light_mode=light_mode)
+    batch_convert_md_to_html(entries_folder, output_folder, site_name, light_mode=light_mode, use_folders=use_folders)
 
 
 if __name__ == "__main__":
