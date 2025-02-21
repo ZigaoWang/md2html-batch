@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-
+import re
 
 def print_logo():
     logo = r"""
@@ -20,6 +20,23 @@ def print_logo():
     print("This project is licensed under MIT License.")
     print("GitHub Repo: https://github.com/ZigaoWang/md2html-batch/")
     print("--------------------------------------------------")
+
+
+def sanitize_filename(name):
+    """Sanitize filename by removing special characters and replacing spaces/hyphens with single hyphen."""
+    # Remove file extension if present
+    base_name = name
+    extension = ''
+    if '.' in name:
+        base_name, extension = name.rsplit('.', 1)
+        extension = '.' + extension
+    
+    # Replace special characters and spaces with hyphens
+    sanitized = re.sub(r'[^\w\s-]', '', base_name)
+    sanitized = re.sub(r'[-\s]+', '-', sanitized).strip('-')
+    
+    # Return with extension if there was one
+    return sanitized + extension
 
 
 def convert_md_to_html(md_text, light_mode=True):
@@ -111,12 +128,12 @@ def batch_convert_md_to_html(entries_folder, output_folder, site_name, light_mod
         html_with_style = add_custom_style(html, css_content)
 
         if use_folders:
-            html_folder_name = md_file.replace('.md', '')
+            html_folder_name = sanitize_filename(md_file.replace('.md', ''))
             html_folder_path = os.path.join(output_folder, html_folder_name)
             os.makedirs(html_folder_path, exist_ok=True)
             html_file_path = os.path.join(html_folder_path, 'index.html')
         else:
-            html_file_name = md_file.replace('.md', '.html')
+            html_file_name = sanitize_filename(md_file.replace('.md', '.html'))
             html_file_path = os.path.join(output_folder, html_file_name)
 
         with open(html_file_path, 'w', encoding='utf-8') as html_file:
@@ -137,9 +154,9 @@ def batch_convert_md_to_html(entries_folder, output_folder, site_name, light_mod
 
     for md_file in md_files:
         if use_folders:
-            html_file = md_file.replace('.md', '') + '/'
+            html_file = sanitize_filename(md_file.replace('.md', '')) + '/'
         else:
-            html_file = md_file.replace('.md', '.html')
+            html_file = sanitize_filename(md_file.replace('.md', '.html'))
         index_content += f'<li><a href="{html_file}">{md_file.replace(".md", "")}</a></li>\n'
 
     index_content += """
